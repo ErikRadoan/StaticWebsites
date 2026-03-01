@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kombinovaný moderátor grafit–BeC pre kompaktný tóriový reaktor LFTR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/slides.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Progress bar -->
+    <div id="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+
+    <!-- Slide counter -->
+    <div id="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">0</span>
+    </div>
+
+    <!-- ==================== SLIDES ==================== -->
+    <div id="presentation">
+
+        <!-- SLIDE 1: Title -->
+        <section class="slide slide--title" data-slide="1">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Stredoškolská odborná činnosť 2026</p>
+                <h1 class="slide__heading anim-fade-up">Výhody kombinovaného moderátora grafit–BeC pre kompaktný tóriový reaktor LFTR</h1>
+                <div class="slide__divider anim-scale-x"></div>
+                <p class="slide__author anim-fade-up anim-delay-1">Erik M.</p>
+                <p class="slide__meta anim-fade-up anim-delay-2">SPŠ Elektrotechnická Hálova 16, Bratislava</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Outline / Obsah -->
+        <section class="slide slide--outline" data-slide="2">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-down">Štruktúra prezentácie</h2>
+                <ol class="outline-list">
+                    <li class="anim-fade-right anim-delay-1"><span class="outline-num">01</span> Úvod do jadrového inžinierstva a neutrónovej moderácie</li>
+                    <li class="anim-fade-right anim-delay-2"><span class="outline-num">02</span> Budúcnosť jadrovej energetiky</li>
+                    <li class="anim-fade-right anim-delay-3"><span class="outline-num">03</span> Ako funguje LFTR?</li>
+                    <li class="anim-fade-right anim-delay-4"><span class="outline-num">04</span> Jadrový reaktor v počítači</li>
+                    <li class="anim-fade-right anim-delay-5"><span class="outline-num">05</span> Parametrické štúdie</li>
+                    <li class="anim-fade-right anim-delay-6"><span class="outline-num">06</span> Čo ďalej?</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ===== SECTION 1: Úvod do jadrového inžinierstva ===== -->
+
+        <!-- SLIDE 3: Section title -->
+        <section class="slide slide--section slide--neutrons" data-slide="3">
+            <canvas class="neutron-canvas" id="neutron-canvas"></canvas>
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 01</p>
+                <h2 class="slide__heading anim-fade-up">Úvod do jadrového inžinierstva a neutrónovej moderácie</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Fission spectrum -->
+        <section class="slide slide--graph" data-slide="4">
+            <div class="slide__content">
+                <div class="slide__text anim-fade-right">
+                    <h2 class="slide__heading">Energetické spektrum novo uvoľnených neutrónov</h2>
+                    <p class="slide__subheading">Neutrón uvoľnený pri štiepení <sup>233</sup>U nesie priemernú energiu ~2 MeV — ide o rýchly neutrón. Reaktor ho musí spomaliť na tepelnú energiu (~0,025 eV).</p>
+                </div>
+                <div class="slide__image-wrap anim-fade-up anim-delay-1">
+                    <img src="img/fission_spectrum_u233.png" alt="Spektrum energií neutrónov z štiepenia U-233">
+                    <span class="slide__image-caption">Watt distribúcia, ENDF/B-VII.1 (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Termálne vs rýchlo-spektrálne reaktory -->
+        <section class="slide slide--graph" data-slide="5">
+            <div class="slide__content">
+                <div class="slide__text anim-fade-right">
+                    <h2 class="slide__heading">Termálne-spektrálne vs rýchlo-spektrálne reaktory</h2>
+                    <p class="slide__subheading">Porovnanie účinných prierezov absorpcie <sup>233</sup>U a <sup>238</sup>U. <sup>233</sup>U je výrazne efektívnejší pri nízkych (tepelných) energiách — preto je výhodný v tepelnom reaktore.</p>
+                </div>
+                <div class="slide__image-wrap anim-fade-up anim-delay-1">
+                    <img src="img/comparison_absorption_xs.png" alt="Porovnanie účinných prierezov absorpcie U-233 vs U-238">
+                    <span class="slide__image-caption">Účinné prierezy absorpcie <sup>233</sup>U a <sup>238</sup>U — ENDF/B-VII.1 (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION 2: Budúcnosť jadrovej energetiky ===== -->
+
+        <!-- SLIDE 6: Moderácia — single nucleus + incoming neutrons -->
+        <section class="slide slide--moderation" data-slide="6">
+            <canvas class="moderation-canvas" id="moderation-canvas"></canvas>
+            <div class="slide__content">
+                <div class="mod-text anim-fade-right">
+                    <h2 class="slide__heading">Moderácia neutrónov</h2>
+                    <div class="slide__divider"></div>
+                    <p class="mod-text__body">Čím <strong>ľahší</strong> je atóm moderátora, tým viac energie neutrón pri zrážke odovzdá.</p>
+                    <p class="mod-text__body">Grafit (<sup>12</sup>C) je preto ideálny — ľahké jadro, nízka absorpcia, vysoká spomaľovacia schopnosť.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Moderation ratio comparison graph -->
+        <section class="slide slide--graph" data-slide="7">
+            <div class="slide__content">
+                <div class="slide__text anim-fade-right">
+                    <h2 class="slide__heading">Rozdiel moderačných vlastností karbidu berýlia a grafitu</h2>
+                    <div class="slide__divider"></div>
+                    <p class="slide__subheading">Moderačný pomer (φ<sub>tepelný</sub> / φ<sub>rýchly</sub>) vyjadruje schopnosť materiálu termaliz­ovať neutróny. Čím vyšší pomer, tým efektívnejšia moderácia.</p>
+                    <p class="slide__subheading" style="margin-top:0.85rem;">Be<sub>2</sub>C dosahuje výrazne vyšší moderačný pomer než grafit napriek rovnakej hrúbke vrstvy.</p>
+                </div>
+                <div class="slide__image-wrap anim-fade-up anim-delay-1">
+                    <img src="img/comparison_moderation_ratio.png" alt="Porovnanie moderačného pomeru BeC vs Grafit">
+                    <span class="slide__image-caption">Moderačný pomer φ<sub>t</sub>/φ<sub>r</sub> — BeC vs. Grafit (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: Section title — Budúcnosť jadrovej energetiky -->
+        <section class="slide slide--section" data-slide="8">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 02</p>
+                <h2 class="slide__heading anim-fade-up">Budúcnosť jadrovej energetiky</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+            <div class="section-bg-image">
+                <svg viewBox="0 0 1024 892" xmlns="http://www.w3.org/2000/svg" class="section-svg section-svg--powerplant">
+                    <path d="M909.2 890.2V740.5c0-6.3-5.1-11.4-11.4-11.4h-58.4V574c0-6.3-5.1-11.4-11.4-11.4h-80.6c-6.3 0-11.4 5.2-11.4 11.4v155.1h-58.4c-6.3 0-11.4 5.1-11.4 11.4v149.7h243z" fill="#58a6ff" />
+                    <path d="M736 637.6h103.5v91.5H736zM666.1 768.2h243.1v41H666.1z" fill="#2a9d8f" />
+                    <path d="M800.4 92.3c-19.9 0-37.6 9.4-48.9 23.9-12.6-5.6-26.5-8.7-41.1-8.7-41 0-76.3 24.2-92.4 59.1-9.8-2.9-20.2-4.5-31-4.5-52 0-95.5 36.4-106.6 85-63.1 7.7-112 61.5-112 126.8 0 70.6 57.2 127.7 127.7 127.7 18.8 0 36.7-4.1 52.7-11.4 16.1 7.3 33.9 11.4 52.7 11.4 70.6 0 127.7-57.2 127.7-127.7 0-23-6.1-44.5-16.7-63.1 53.1-1.2 96.1-43 99.2-95.6 28.8-5.4 50.6-30.6 50.6-61 0.1-34.1-27.7-61.9-61.9-61.9z" fill="#58a6ff" />
+                    <path d="M850.9 890.2c-93.9-71.4-108.1-412.9-108.1-488v-18.3c0-10.1-8.2-18.3-18.3-18.3h-352c-10.1 0-18.3 8.2-18.3 18.3v18.3c0 75.1-14.2 416.6-108.1 488h604.8z" fill="#3d7fd4" />
+                    <path d="M548.5 414.7m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#58a6ff" />
+                    <path d="M431.5 414.7m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#58a6ff" />
+                    <path d="M665.6 414.7m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#58a6ff" />
+                    <path d="M764.7 667.4H332.3c-1.6 9.6-3.2 19.1-5 28.6h442.4c-1.8-9.5-3.4-19.1-5-28.6z m-9.6-69.5H341.9c-1.1 9.5-2.3 19-3.5 28.6h420.3c-1.3-9.6-2.5-19.2-3.6-28.6z" fill="#f0b952" />
+                    <path d="M605.4 890.2C533 835.2 522 571.8 522 513.8v-14.1c0-7.8-6.3-14.1-14.1-14.1H236.5c-7.8 0-14.1 6.3-14.1 14.1v14.1c0 58-10.9 321.3-83.4 376.4h466.4z" fill="#58a6ff" />
+                    <path d="M372.2 538m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#3d7fd4" />
+                    <path d="M284.5 538m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#3d7fd4" />
+                    <path d="M459.9 538m-14.2 0a14.2 14.2 0 1 0 28.4 0 14.2 14.2 0 1 0-28.4 0Z" fill="#3d7fd4" />
+                    <path d="M552 782.3H192.5c-2.5 9.9-5.2 19.5-8.1 28.6h375.8c-3-9.1-5.7-18.7-8.2-28.6z m-12-57.8H204.5c-1.6 9.6-3.4 19.2-5.3 28.6h346.2c-2-9.4-3.8-19-5.4-28.6z" fill="#ffd080" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: Dnešné reaktory (text enlarged) -->
+        <section class="slide slide--img-right slide--large-text" data-slide="9">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-down">Dnešné reaktory</h2>
+                <div class="slide__body anim-fade-up anim-delay-1">
+                    <ul class="slide-list">
+                        <li><span class="bullet"></span>dizajn zo 70-tych rokov</li>
+                        <li><span class="bullet"></span>problém jadrového odpadu</li>
+                        <li><span class="bullet"></span>obmedzená udržateľnosť paliva</li>
+                        <li><span class="bullet"></span>chýbajúca pasívna bezpečnosť</li>
+                    </ul>
+                </div>
+                <div class="slide__image anim-fade-up anim-delay-2">
+                    <img src="img/VVER.png" alt="VVER reaktor">
+                    <span class="slide__image-caption">VVER-1200 — typický reaktor Gen III+</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: Gen IV reaktory — text hero -->
+        <section class="slide slide--text-hero" data-slide="10">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-down">Gen&nbsp;<span class="heading-accent">IV</span> reaktory</h2>
+                <ul class="slide-list anim-fade-up anim-delay-1">
+                    <li><span class="bullet"></span>medzinárodná spolupráca</li>
+                    <li><span class="bullet"></span>riešia dnešné problémy</li>
+                    <li><span class="bullet"></span>ďalší krok pred fúziou</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: Gen IV — full image -->
+        <section class="slide slide--fullimg" data-slide="11">
+            <div class="slide__content">
+                <img src="img/GenIVReactors.png" alt="Gen IV reaktory" class="anim-fade-up">
+                <span class="slide__image-caption">6 systémov vybratých Generation IV International Forum</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: MSR — full image -->
+        <section class="slide slide--fullimg" data-slide="12">
+            <div class="slide__content">
+                <img src="img/MSR.png" alt="Molten Salt Reactor" class="anim-fade-up">
+                <span class="slide__image-caption">Molten Salt Reactor (MSR) — reaktor s roztavenými soľami</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: Molten salt types -->
+        <section class="slide slide--salts" data-slide="13">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Roztavené soli</p>
+                <div class="salts-grid">
+                    <span class="salt-item anim-fade-up anim-delay-1">Actinide Chlorides</span>
+                    <span class="salt-item anim-fade-up anim-delay-2">NaCl–MgCl₂</span>
+                    <span class="salt-item anim-fade-up anim-delay-3">LiCl–KCl</span>
+                    <span class="salt-item anim-fade-up anim-delay-4">NaF–ZrF₄</span>
+                    <span class="salt-item anim-fade-up anim-delay-5">FLiNaK</span>
+                    <span class="salt-item salt-item--highlight anim-fade-up anim-delay-6">FLiBe</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION 3: Ako funguje LFTR? ===== -->
+
+        <!-- SLIDE 14: Section title -->
+        <section class="slide slide--section" data-slide="14">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 03</p>
+                <h2 class="slide__heading anim-fade-up">Ako funguje LFTR?</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+            <div class="section-bg-image section-bg-image--th232">
+                <span class="th232-text">Th-232</span>
+                <span class="u233-text">U-233</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 15: Thorium cycle diagram -->
+        <section class="slide slide--thorium" data-slide="15">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-down">Tóriový palivový cyklus</h2>
+                <div class="thorium-cycle anim-fade-up anim-delay-1">
+
+                    <!-- Step 1: Th-232 -->
+                    <div class="tc-node tc-node--fertile">
+                        <div class="tc-nucleus">
+                            <span class="tc-mass">232</span>
+                            <span class="tc-symbol">Th</span>
+                            <span class="tc-num">90</span>
+                        </div>
+                        <span class="tc-label">Tórium-232</span>
+                        <span class="tc-sublabel">Plodivý materiál</span>
+                    </div>
+
+                    <!-- Arrow: neutron capture -->
+                    <div class="tc-arrow">
+                        <div class="tc-arrow-line"></div>
+                        <div class="tc-arrow-label">+ n<br><span class="tc-arrow-sub">záchyt neutrónu</span></div>
+                        <div class="tc-arrow-head"></div>
+                    </div>
+
+                    <!-- Step 2: Th-233 -->
+                    <div class="tc-node tc-node--intermediate">
+                        <div class="tc-nucleus">
+                            <span class="tc-mass">233</span>
+                            <span class="tc-symbol">Th</span>
+                            <span class="tc-num">90</span>
+                        </div>
+                        <span class="tc-label">Tórium-233</span>
+                        <span class="tc-sublabel">t½ = 22 min</span>
+                    </div>
+
+                    <!-- Arrow: beta decay -->
+                    <div class="tc-arrow">
+                        <div class="tc-arrow-line"></div>
+                        <div class="tc-arrow-label">β⁻<br><span class="tc-arrow-sub">beta rozpad</span></div>
+                        <div class="tc-arrow-head"></div>
+                    </div>
+
+                    <!-- Step 3: Pa-233 -->
+                    <div class="tc-node tc-node--intermediate">
+                        <div class="tc-nucleus">
+                            <span class="tc-mass">233</span>
+                            <span class="tc-symbol">Pa</span>
+                            <span class="tc-num">91</span>
+                        </div>
+                        <span class="tc-label">Protaktínium-233</span>
+                        <span class="tc-sublabel">t½ = 27 dní</span>
+                    </div>
+
+                    <!-- Arrow: beta decay -->
+                    <div class="tc-arrow">
+                        <div class="tc-arrow-line"></div>
+                        <div class="tc-arrow-label">β⁻<br><span class="tc-arrow-sub">beta rozpad</span></div>
+                        <div class="tc-arrow-head"></div>
+                    </div>
+
+                    <!-- Step 4: U-233 -->
+                    <div class="tc-node tc-node--fissile">
+                        <div class="tc-nucleus">
+                            <span class="tc-mass">233</span>
+                            <span class="tc-symbol">U</span>
+                            <span class="tc-num">92</span>
+                        </div>
+                        <span class="tc-label">Urán-233</span>
+                        <span class="tc-sublabel">Štiepny materiál</span>
+                    </div>
+
+                    <!-- Arrow: fission -->
+                    <div class="tc-arrow">
+                        <div class="tc-arrow-line"></div>
+                        <div class="tc-arrow-label">+ n<br><span class="tc-arrow-sub">štiepenie</span></div>
+                        <div class="tc-arrow-head"></div>
+                    </div>
+
+                    <!-- Step 5: Energy + neutrons -->
+                    <div class="tc-node tc-node--energy">
+                        <div class="tc-nucleus tc-nucleus--energy">
+                            <span class="tc-energy-icon">⚡</span>
+                        </div>
+                        <span class="tc-label">Energia + neutróny</span>
+                        <span class="tc-sublabel">~2–3 n na štiepenie</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 16: Active zone geometry -->
+        <section class="slide slide--geometry" data-slide="16">
+            <div class="slide__content slide__content--geometry">
+                <div class="geo-text anim-fade-right">
+                    <h2 class="slide__heading">Zjednodušená geometria aktívnej zóny</h2>
+                    <div class="slide__divider"></div>
+                    <p class="geo-desc">Prierez reaktorom LFTR pri hrúbke grafitovej vrstvy <strong>50 cm</strong>. Aktívna zóna (soľ FLiBe s palivom) má polomer <strong>35 cm</strong>. Vonkajší polomer reaktora dosahuje <strong>85 cm</strong> — priemer ~1,7 m.</p>
+                    <div class="geo-legend">
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--core"></span>
+                            <span>Aktívna zóna — FLiBe soľ</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--graphite"></span>
+                            <span>Grafitový moderátor (50 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--vessel"></span>
+                            <span>Plášť Hastelloy-N (2 cm)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="geo-diagram anim-fade-up anim-delay-1">
+                    <svg class="geo-svg" viewBox="0 0 560 520" xmlns="http://www.w3.org/2000/svg" aria-label="Prierez aktívnou zónou LFTR">
+                        <defs>
+                            <radialGradient id="grad-vessel" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#7986cb" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#3949ab" stop-opacity="0.9"/>
+                            </radialGradient>
+                            <radialGradient id="grad-graphite" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#546e7a" stop-opacity="0.55"/>
+                                <stop offset="100%" stop-color="#263238" stop-opacity="0.85"/>
+                            </radialGradient>
+                            <radialGradient id="grad-core" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ef5350" stop-opacity="0.5"/>
+                                <stop offset="100%" stop-color="#b71c1c" stop-opacity="0.85"/>
+                            </radialGradient>
+                            <filter id="glow-core">
+                                <feGaussianBlur stdDeviation="6" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Scale: 85 cm → 244 px  ⟹  1 cm ≈ 2.87 px  (centred at 260,260) -->
+
+                        <!-- Vessel shell outer r = 87 cm → 250 px -->
+                        <circle cx="260" cy="260" r="250" fill="url(#grad-vessel)" stroke="#5c6bc0" stroke-width="1.5" opacity="0.7"/>
+
+                        <!-- Graphite outer r = 85 cm → 244 px -->
+                        <circle cx="260" cy="260" r="244" fill="url(#grad-graphite)" stroke="#78909c" stroke-width="1"/>
+
+                        <!-- Core r = 35 cm → 101 px -->
+                        <circle cx="260" cy="260" r="101" fill="url(#grad-core)" stroke="#ef9a9a" stroke-width="1.5" filter="url(#glow-core)"/>
+
+                        <!-- Cross hairs on core -->
+                        <line x1="159" y1="260" x2="361" y2="260" stroke="rgba(239,154,154,0.20)" stroke-width="1" stroke-dasharray="4 4"/>
+                        <line x1="260" y1="159" x2="260" y2="361" stroke="rgba(239,154,154,0.20)" stroke-width="1" stroke-dasharray="4 4"/>
+
+                        <!-- Dimension line: core radius -->
+                        <line x1="260" y1="260" x2="361" y2="260" stroke="#ef9a9a" stroke-width="1.5" stroke-dasharray="0" opacity="0.85"/>
+                        <line x1="361" y1="253" x2="361" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="260" y1="253" x2="260" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <text x="310" y="250" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef9a9a" text-anchor="middle">35 cm</text>
+
+                        <!-- Dimension line: graphite thickness -->
+                        <line x1="361" y1="260" x2="504" y2="260" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="0" opacity="0.85"/>
+                        <line x1="504" y1="253" x2="504" y2="267" stroke="#90a4ae" stroke-width="1.5" opacity="0.85"/>
+                        <text x="432" y="250" font-family="JetBrains Mono, monospace" font-size="12" fill="#90a4ae" text-anchor="middle">50 cm</text>
+
+                        <!-- Vessel thickness annotation -->
+                        <line x1="504" y1="260" x2="510" y2="260" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <line x1="510" y1="253" x2="510" y2="267" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <text x="535" y="250" font-family="JetBrains Mono, monospace" font-size="10" fill="#7986cb" text-anchor="middle">2 cm</text>
+
+                        <!-- Layer labels -->
+                        <text x="260" y="255" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#ffcdd2" text-anchor="middle">FLiBe</text>
+                        <text x="260" y="272" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,205,210,0.65)" text-anchor="middle">aktívna zóna</text>
+                        <text x="432" y="216" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#b0bec5" text-anchor="middle">Grafit</text>
+                        <text x="432" y="231" font-family="Inter, sans-serif" font-size="10" fill="rgba(176,190,197,0.65)" text-anchor="middle">moderátor</text>
+                    </svg>
+                    <span class="slide__image-caption">Priečny prierez aktívnou zónou LFTR — merítko zachované (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 17: BeC-only geometry (same moderation as graphite@50cm) -->
+        <section class="slide slide--geometry" data-slide="17">
+            <div class="slide__content slide__content--geometry">
+                <div class="geo-text anim-fade-right">
+                    <h2 class="slide__heading">Geometria s čistou Be₂C vrstvou</h2>
+                    <div class="slide__divider"></div>
+                    <p class="geo-desc">Aby samotný <strong>Be₂C</strong> dosiahol rovnaký moderačný pomer ako <strong>50 cm grafitu</strong>, potrebuje vrstvu hrúbky <strong>≈ 35,5 cm</strong>. Celkový polomer reaktora: <strong>72,5 cm</strong> — o 12,5 cm menší.</p>
+                    <div class="geo-legend">
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--core"></span>
+                            <span>Aktívna zóna — FLiBe soľ (35 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--bec"></span>
+                            <span>Be₂C moderátor (≈ 35,5 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--vessel"></span>
+                            <span>Plášť Hastelloy-N (2 cm)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="geo-diagram anim-fade-up anim-delay-1">
+                    <!-- Scale: total 72.5cm → 248px ⟹ 1cm ≈ 3.42px. Centre 260,260 -->
+                    <svg class="geo-svg" viewBox="0 0 560 520" xmlns="http://www.w3.org/2000/svg" aria-label="Prierez LFTR s Be2C vrstvou">
+                        <defs>
+                            <radialGradient id="grad-vessel-b" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#7986cb" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#3949ab" stop-opacity="0.9"/>
+                            </radialGradient>
+                            <radialGradient id="grad-bec" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#f9a825" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#e65100" stop-opacity="0.80"/>
+                            </radialGradient>
+                            <radialGradient id="grad-core-b" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ef5350" stop-opacity="0.5"/>
+                                <stop offset="100%" stop-color="#b71c1c" stop-opacity="0.85"/>
+                            </radialGradient>
+                            <filter id="glow-core-b">
+                                <feGaussianBlur stdDeviation="5" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Vessel outer r = 72.5cm × 3.42 ≈ 248px -->
+                        <circle cx="260" cy="260" r="250" fill="url(#grad-vessel-b)" stroke="#5c6bc0" stroke-width="1.5" opacity="0.7"/>
+
+                        <!-- BeC outer r = 70.5cm × 3.42 ≈ 241px -->
+                        <circle cx="260" cy="260" r="241" fill="url(#grad-bec)" stroke="#fb8c00" stroke-width="1"/>
+
+                        <!-- Core r = 35cm × 3.42 ≈ 120px -->
+                        <circle cx="260" cy="260" r="120" fill="url(#grad-core-b)" stroke="#ef9a9a" stroke-width="1.5" filter="url(#glow-core-b)"/>
+
+                        <!-- Cross hairs -->
+                        <line x1="140" y1="260" x2="380" y2="260" stroke="rgba(239,154,154,0.18)" stroke-width="1" stroke-dasharray="4 4"/>
+                        <line x1="260" y1="140" x2="260" y2="380" stroke="rgba(239,154,154,0.18)" stroke-width="1" stroke-dasharray="4 4"/>
+
+                        <!-- Dim line: core radius 35cm -->
+                        <line x1="260" y1="260" x2="380" y2="260" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="260" y1="253" x2="260" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="380" y1="253" x2="380" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <text x="320" y="250" font-family="JetBrains Mono, monospace" font-size="12" fill="#ef9a9a" text-anchor="middle">35 cm</text>
+
+                        <!-- Dim line: BeC thickness ≈35.5cm → 121px -->
+                        <line x1="380" y1="260" x2="501" y2="260" stroke="#fb8c00" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="501" y1="253" x2="501" y2="267" stroke="#fb8c00" stroke-width="1.5" opacity="0.85"/>
+                        <text x="440" y="250" font-family="JetBrains Mono, monospace" font-size="11" fill="#fb8c00" text-anchor="middle">≈35,5 cm</text>
+
+                        <!-- Vessel -->
+                        <line x1="501" y1="260" x2="510" y2="260" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <line x1="510" y1="253" x2="510" y2="267" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <text x="535" y="250" font-family="JetBrains Mono, monospace" font-size="10" fill="#7986cb" text-anchor="middle">2 cm</text>
+
+                        <!-- Labels -->
+                        <text x="260" y="255" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#ffcdd2" text-anchor="middle">FLiBe</text>
+                        <text x="260" y="272" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,205,210,0.65)" text-anchor="middle">aktívna zóna</text>
+                        <text x="440" y="215" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#ffcc80" text-anchor="middle">Be₂C</text>
+                        <text x="440" y="230" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,204,128,0.65)" text-anchor="middle">moderátor</text>
+                    </svg>
+                    <span class="slide__image-caption">Be₂C geometria — rovnaká moderácia ako grafit 50 cm, polomer 72,5 cm (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 18: FLiBe chemical attack on Be2C -->
+        <section class="slide slide--chem" data-slide="18">
+            <div class="slide__content slide__content--chem">
+                <div class="chem-text anim-fade-right">
+                    <h2 class="slide__heading">FLiBe vs. Be₂C — chemická reaktivita</h2>
+                    <div class="slide__divider"></div>
+                    <p class="chem-desc">Soľ FLiBe (LiF·BeF₂) pri priamom kontakte s Be₂C extrahuje beryliové ióny, čím <strong>degraduje moderátor</strong>. Reaktor si preto vyžaduje ochrannú vrstvu.</p>
+                    <p class="chem-desc" style="margin-top:1rem;">Preto sa medzi soľ a Be₂C vkladá <strong>grafitová bariéra</strong> — chráni moderátor pred priamym kontaktom.</p>
+                </div>
+                <div class="chem-reactions anim-fade-up anim-delay-1">
+                    <!-- Main attack reaction -->
+                    <div class="chem-reaction-box chem-reaction-box--danger">
+                        <p class="chem-reaction-label">Rozpúšťanie Be₂C soľou FLiBe</p>
+                        <p class="chem-equation">
+                            <span class="chem-formula chem-formula--reactant">Be₂C</span>
+                            <span class="chem-op">+</span>
+                            <span class="chem-formula chem-formula--reactant">2 BeF₂</span>
+                            <span class="chem-arrow">⟶</span>
+                            <span class="chem-formula chem-formula--product">4 BeF</span>
+                            <span class="chem-op">+</span>
+                            <span class="chem-formula chem-formula--product">C</span>
+                        </p>
+                        <p class="chem-note">BeF₂ je súčasťou FLiBe soli — reaguje priamo s Be₂C</p>
+                    </div>
+
+                    <!-- Fluoride ion attack -->
+                    <div class="chem-reaction-box chem-reaction-box--warning">
+                        <p class="chem-reaction-label">Fluoridový útok na Be₂C</p>
+                        <p class="chem-equation">
+                            <span class="chem-formula chem-formula--reactant">Be₂C</span>
+                            <span class="chem-op">+</span>
+                            <span class="chem-formula chem-formula--reactant">4 HF</span>
+                            <span class="chem-arrow">⟶</span>
+                            <span class="chem-formula chem-formula--product">2 BeF₂</span>
+                            <span class="chem-op">+</span>
+                            <span class="chem-formula chem-formula--product">CH₄↑</span>
+                        </p>
+                        <p class="chem-note">Stopa vlhkosti v soli produkuje HF, ktorý napáda Be₂C</p>
+                    </div>
+
+                    <!-- Protection note -->
+                    <div class="chem-reaction-box chem-reaction-box--safe">
+                        <p class="chem-reaction-label">Riešenie — grafitová bariéra</p>
+                        <div class="chem-protection-row">
+                            <div class="chem-layer-badge chem-layer-badge--salt">FLiBe soľ</div>
+                            <span class="chem-arrow-right">→</span>
+                            <div class="chem-layer-badge chem-layer-badge--graphite">Grafit<br><span class="chem-badge-sub">bariéra</span></div>
+                            <span class="chem-arrow-right">→</span>
+                            <div class="chem-layer-badge chem-layer-badge--bec">Be₂C<br><span class="chem-badge-sub">moderátor</span></div>
+                        </div>
+                        <p class="chem-note">Grafit je odolný voči FLiBe — chráni Be₂C pred degradáciou</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 19: Mixed geometry (10cm graphite + ~30.2cm BeC) -->
+        <section class="slide slide--geometry" data-slide="19">
+            <div class="slide__content slide__content--geometry">
+                <div class="geo-text anim-fade-right">
+                    <h2 class="slide__heading">Geometria so zmiešanou vrstvou</h2>
+                    <div class="slide__divider"></div>
+                    <p class="geo-desc"><strong>10 cm grafitu</strong> (ochranná bariéra) + <strong>≈ 30,2 cm Be₂C</strong> dosiahne rovnaký moderačný pomer ako samotných <strong>50 cm grafitu</strong>. Celkový polomer: <strong>77,2 cm</strong>.</p>
+                    <div class="geo-legend">
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--core"></span>
+                            <span>Aktívna zóna — FLiBe soľ (35 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--graphite"></span>
+                            <span>Grafitová bariéra (10 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--bec"></span>
+                            <span>Be₂C moderátor (≈ 30,2 cm)</span>
+                        </div>
+                        <div class="geo-legend-item">
+                            <span class="geo-legend-dot geo-legend-dot--vessel"></span>
+                            <span>Plášť Hastelloy-N (2 cm)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="geo-diagram anim-fade-up anim-delay-1">
+                    <!-- Scale: total 77.2cm → 248px ⟹ 1cm ≈ 3.21px. Centre 260,260 -->
+                    <svg class="geo-svg" viewBox="0 0 560 520" xmlns="http://www.w3.org/2000/svg" aria-label="Prierez LFTR so zmiešanou vrstvou">
+                        <defs>
+                            <radialGradient id="grad-vessel-m" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#7986cb" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#3949ab" stop-opacity="0.9"/>
+                            </radialGradient>
+                            <radialGradient id="grad-bec-m" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#f9a825" stop-opacity="0.45"/>
+                                <stop offset="100%" stop-color="#e65100" stop-opacity="0.80"/>
+                            </radialGradient>
+                            <radialGradient id="grad-graphite-m" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#546e7a" stop-opacity="0.55"/>
+                                <stop offset="100%" stop-color="#263238" stop-opacity="0.85"/>
+                            </radialGradient>
+                            <radialGradient id="grad-core-m" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ef5350" stop-opacity="0.5"/>
+                                <stop offset="100%" stop-color="#b71c1c" stop-opacity="0.85"/>
+                            </radialGradient>
+                            <filter id="glow-core-m">
+                                <feGaussianBlur stdDeviation="5" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Vessel outer r = 77.2cm × 3.21 ≈ 248px -->
+                        <circle cx="260" cy="260" r="248" fill="url(#grad-vessel-m)" stroke="#5c6bc0" stroke-width="1.5" opacity="0.7"/>
+
+                        <!-- BeC outer r = 75.2cm × 3.21 ≈ 241px -->
+                        <circle cx="260" cy="260" r="241" fill="url(#grad-bec-m)" stroke="#fb8c00" stroke-width="1"/>
+
+                        <!-- Graphite outer r = 45cm × 3.21 ≈ 145px -->
+                        <circle cx="260" cy="260" r="145" fill="url(#grad-graphite-m)" stroke="#78909c" stroke-width="1"/>
+
+                        <!-- Core r = 35cm × 3.21 ≈ 112px -->
+                        <circle cx="260" cy="260" r="112" fill="url(#grad-core-m)" stroke="#ef9a9a" stroke-width="1.5" filter="url(#glow-core-m)"/>
+
+                        <!-- Cross hairs -->
+                        <line x1="148" y1="260" x2="372" y2="260" stroke="rgba(239,154,154,0.18)" stroke-width="1" stroke-dasharray="4 4"/>
+                        <line x1="260" y1="148" x2="260" y2="372" stroke="rgba(239,154,154,0.18)" stroke-width="1" stroke-dasharray="4 4"/>
+
+                        <!-- Dim: core 35cm → 112px -->
+                        <line x1="260" y1="260" x2="372" y2="260" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="260" y1="253" x2="260" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="372" y1="253" x2="372" y2="267" stroke="#ef9a9a" stroke-width="1.5" opacity="0.85"/>
+                        <text x="316" y="250" font-family="JetBrains Mono, monospace" font-size="11" fill="#ef9a9a" text-anchor="middle">35 cm</text>
+
+                        <!-- Dim: graphite 10cm → 32px -->
+                        <line x1="372" y1="260" x2="405" y2="260" stroke="#90a4ae" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="405" y1="253" x2="405" y2="267" stroke="#90a4ae" stroke-width="1.5" opacity="0.85"/>
+                        <text x="388" y="247" font-family="JetBrains Mono, monospace" font-size="9" fill="#90a4ae" text-anchor="middle">10 cm</text>
+
+                        <!-- Dim: BeC ~30.2cm → 97px -->
+                        <line x1="405" y1="260" x2="502" y2="260" stroke="#fb8c00" stroke-width="1.5" opacity="0.85"/>
+                        <line x1="502" y1="253" x2="502" y2="267" stroke="#fb8c00" stroke-width="1.5" opacity="0.85"/>
+                        <text x="453" y="250" font-family="JetBrains Mono, monospace" font-size="10" fill="#fb8c00" text-anchor="middle">≈30,2 cm</text>
+
+                        <!-- Vessel 2cm -->
+                        <line x1="502" y1="260" x2="510" y2="260" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <line x1="510" y1="253" x2="510" y2="267" stroke="#7986cb" stroke-width="1.5" opacity="0.75"/>
+                        <text x="534" y="250" font-family="JetBrains Mono, monospace" font-size="9" fill="#7986cb" text-anchor="middle">2 cm</text>
+
+                        <!-- Labels inside layers -->
+                        <text x="260" y="255" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#ffcdd2" text-anchor="middle">FLiBe</text>
+                        <text x="260" y="270" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,205,210,0.65)" text-anchor="middle">aktívna zóna</text>
+                        <!-- Graphite label — in narrow ring, show outside -->
+                        <text x="388" y="216" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#b0bec5" text-anchor="middle">Grafit</text>
+                        <!-- BeC label -->
+                        <text x="453" y="210" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#ffcc80" text-anchor="middle">Be₂C</text>
+                        <text x="453" y="224" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,204,128,0.65)" text-anchor="middle">moderátor</text>
+                    </svg>
+                    <span class="slide__image-caption">Zmiešaná geometria — rovnaká moderácia ako grafit 50 cm, polomer 77,2 cm (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECTION 4: Jadrový reaktor v počítači ===== -->
+
+        <!-- SLIDE 20: Section title -->
+        <section class="slide slide--section slide--section-endf" data-slide="20">
+            <canvas class="endf-bg-canvas" id="endf-scroll-20"></canvas>
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 04</p>
+                <h2 class="slide__heading anim-fade-up">Jadrový reaktor v počítači</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 21: OpenMC -->
+        <section class="slide slide--img-right" data-slide="21">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-down">OpenMC — Monte Carlo simulácia</h2>
+                <div class="slide__body anim-fade-up anim-delay-1">
+                    <ul class="slide-list">
+                        <li><span class="bullet"></span>open-source Monte Carlo kód pre simuláciu transportu neutrónov</li>
+                        <li><span class="bullet"></span>vyvinutý na MIT, dnes spravovaný komunitou</li>
+                        <li><span class="bullet"></span>sleduje pohyb jednotlivých neutrónov stochasticky — simuluje zrážky, absorpcie, štiepenia</li>
+                        <li><span class="bullet"></span>výpočet k-efektívneho (kritickosť reaktora) v móde <em>eigenvalue</em></li>
+                        <li><span class="bullet"></span>vstupné dáta: geometria (XML), materiály (XML), nastavenia simulácie</li>
+                    </ul>
+                </div>
+                <div class="slide__image anim-fade-up anim-delay-2">
+                    <img src="img/OpenMCLogo.png" alt="OpenMC logo" style="background:transparent;border:none;max-height:28vh;">
+                    <span class="slide__image-caption">openmc.org — MIT License</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 22: Simulation parameters -->
+        <section class="slide slide--simparams" data-slide="22">
+            <div class="slide__content slide__content--simparams">
+                <div class="sp-header anim-fade-down">
+                    <h2 class="slide__heading">Parametre simulácií</h2>
+                    <div class="slide__divider"></div>
+                </div>
+                <div class="sp-body anim-fade-up anim-delay-1">
+
+                    <!-- Column 1: Geometry & Fuel -->
+                    <div class="sp-group">
+                        <p class="sp-group-title">Geometria &amp; Palivo</p>
+                        <div class="sp-row">
+                            <span class="sp-key">Tvar jadra</span>
+                            <span class="sp-val">valec (r = 35 cm, h = 200 cm)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Palivo</span>
+                            <span class="sp-val">FLiBe + 2,5 mol% UF₄ (U-233)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Breeding</span>
+                            <span class="sp-val">8,0 mol% ThF₄ (Th-232)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Li-7 obohatenie</span>
+                            <span class="sp-val">99,995 %</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Hustota soli</span>
+                            <span class="sp-val">2,15 g/cm³</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Teplota (všetky štúdie)</span>
+                            <span class="sp-val">923 K (≈ 650 °C)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Tepelný výkon</span>
+                            <span class="sp-val">50 MW<sub>t</sub> (konštatný vo vstupe)</span>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Monte Carlo settings -->
+                    <div class="sp-group">
+                        <p class="sp-group-title">Monte Carlo nastavenia</p>
+                        <div class="sp-row">
+                            <span class="sp-key">Mód výpočtu</span>
+                            <span class="sp-val">eigenvalue (k-eff)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Počet častíc / batch</span>
+                            <span class="sp-val">10 000</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Celkový počet batchov</span>
+                            <span class="sp-val">100 (z toho 20 inactive)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Aktívne histórie</span>
+                            <span class="sp-val">800 000 na jeden bod</span>
+                        </div>
+                        <div class="sp-row sp-row--accent">
+                            <span class="sp-key">Knižnica prierezov</span>
+                            <span class="sp-val">ENDF/B-VII.1 (HDF5)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Teplota prierezov</span>
+                            <span class="sp-val">294 K (s multipól. interpoláciou)</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">S(α,β) dáta</span>
+                            <span class="sp-val">c_Graphite, c_Be_in_BeO</span>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Study design -->
+                    <div class="sp-group">
+                        <p class="sp-group-title">Dizajn štúdií</p>
+                        <div class="sp-row sp-row--accent">
+                            <span class="sp-key">Štúdia A</span>
+                            <span class="sp-val">len Be₂C, 2–50 cm (49 bodov)</span>
+                        </div>
+                        <div class="sp-row sp-row--accent">
+                            <span class="sp-key">Štúdia B</span>
+                            <span class="sp-val">len Grafit, 2–50 cm (49 bodov)</span>
+                        </div>
+                        <div class="sp-row sp-row--accent">
+                            <span class="sp-key">Štúdia C</span>
+                            <span class="sp-val">Zmes: 10 cm Grafit + BeC 2–50 cm</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Celkový počet behov</span>
+                            <span class="sp-val">147 simulácií</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Sledovaná veličina</span>
+                            <span class="sp-val">k-eff, tepelný a rýchly tok</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Plášť reaktora</span>
+                            <span class="sp-val">Hastelloy-N, 2 cm</span>
+                        </div>
+                        <div class="sp-row">
+                            <span class="sp-key">Axiálny reflektor</span>
+                            <span class="sp-val">FLiBe soľ, 30 cm</span>
+                        </div>
+                    </div>
+
+                </div><!-- /.sp-body -->
+
+                <!-- Visual strip: 3D reactor + ENDF scroller -->
+                <div class="sp-visuals anim-fade-up anim-delay-2">
+                    <div class="sp-reactor-wrap">
+                        <canvas id="reactor-3d" class="reactor-3d-canvas"></canvas>
+                        <p class="sp-visual-label">Model reaktora LFTR</p>
+                    </div>
+                    <div class="sp-endf-wrap">
+                        <p class="sp-visual-label sp-endf-title">ENDF/B-VII.1 — náhľad dát</p>
+                        <canvas id="endf-scroll-22" class="endf-scroll-canvas"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ===== SECTION 5: Parametrické štúdie ===== -->
+
+        <!-- SLIDE 23: Section title -->
+        <section class="slide slide--section" data-slide="23">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 05</p>
+                <h2 class="slide__heading anim-fade-up">Parametrické štúdie</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 24: keff result + savings -->
+        <section class="slide slide--graph" data-slide="24">
+            <div class="slide__content slide__content--graph-left">
+                <div class="graph-text anim-fade-right">
+                    <h2 class="slide__heading">Úspora priestoru reaktora</h2>
+                    <div class="slide__divider"></div>
+                    <p class="slide__body--text anim-fade-up anim-delay-1">
+                        Zmiešaná vrstva <strong>10 cm grafitu + Be₂C</strong> dosahuje
+                        rovnakú neutrónovú ekonomiku ako <strong>50 cm čistého grafitu</strong>
+                        už pri celkovej hrúbke <strong>~31,5 cm</strong>.
+                    </p>
+                    <div class="result-badge anim-fade-up anim-delay-2">
+                        <span class="result-num">−18,5 cm</span>
+                        <span class="result-sub">úspora hrúbky reflektora</span>
+                    </div>
+                    <div class="result-badge result-badge--accent anim-fade-up anim-delay-3">
+                        <span class="result-num">37 %</span>
+                        <span class="result-sub">redukcia priemeru reaktora pri rovnakej k-eff</span>
+                    </div>
+                    <p class="slide__body--text anim-fade-up anim-delay-3" style="margin-top:0.8rem;font-size:0.82rem;opacity:0.65;">
+                        Presnosť výpočtu: σ(k-eff) &lt; 0,0005 pri 800 000 aktívnych históriách na bod
+                        (štandartná odchýlka Monte Carlo).
+                    </p>
+                </div>
+                <div class="graph-img-wrap anim-fade-up anim-delay-1">
+                    <img src="img/comparison_keff_vs_thickness.png"
+                         alt="k-eff vs hrubka reflektora"
+                         class="graph-img">
+                    <span class="slide__image-caption">Graf 1 — k-efektívne vs. celková hrúbka reflektora (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 25: LHS animation -->
+        <section class="slide slide--lhs" data-slide="25">
+            <div class="slide__content slide__content--lhs">
+                <div class="lhs-text anim-fade-right">
+                    <h2 class="slide__heading">Latin Hypercube Sampling</h2>
+                    <div class="slide__divider"></div>
+                    <p class="slide__body--text anim-fade-up anim-delay-1">
+                        Rozsah každého parametra sa rozdelí na <strong>N rovnakých pásiem</strong>.
+                        Z každého pásma sa vyberie práve jeden bod — a to tak,
+                        aby každý pás bol pokrytý <em>pre každý parameter</em> presne raz.
+                        Výsledok: N bodov rovnomerne pokrývajúcich celý priestor
+                        bez redundancie.
+                    </p>
+                    <ul class="slide-list anim-fade-up anim-delay-2">
+                        <li><span class="bullet"></span>Každý stĺpec (Parameter 1) obsahuje práve 1 bod</li>
+                        <li><span class="bullet"></span>Každý riadok (Parameter 2) obsahuje práve 1 bod</li>
+                        <li><span class="bullet"></span>N bodov namiesto N² — bez straty pokrytia</li>
+                    </ul>
+                    <div class="lhs-stats anim-fade-up anim-delay-3">
+                        <div class="lhs-stat">
+                            <span class="lhs-stat-num" id="lhs-n-display">7×7</span>
+                            <span class="lhs-stat-lbl">mriežka / vzorky</span>
+                        </div>
+                        <div class="lhs-stat">
+                            <span class="lhs-stat-num" id="lhs-cov-display">7</span>
+                            <span class="lhs-stat-lbl">pásy pokryté</span>
+                        </div>
+                    </div>
+                    <div class="lhs-phase anim-fade-up anim-delay-3">
+                        <span id="lhs-phase-display">Parametrický priestor</span>
+                    </div>
+                </div>
+                <canvas id="lhs-canvas" class="lhs-canvas"></canvas>
+            </div>
+        </section>
+
+        <!-- SLIDE 26: LHS pairwise scatter -->
+        <section class="slide slide--graph" data-slide="26">
+            <div class="slide__content slide__content--graph-left">
+                <div class="graph-text anim-fade-right">
+                    <h2 class="slide__heading">Vplyv parametrov na k-eff</h2>
+                    <div class="slide__divider"></div>
+                    <p class="slide__body--text anim-fade-up anim-delay-1">
+                        Párové bodové grafy 200 LHS vzoriek. Farba bodu
+                        reprezentuje výslednú hodnotu k-efektívne — vidíme
+                        ktoré dvojice parametrov majú najsilnejší vplyv.
+                    </p>
+                    <ul class="slide-list anim-fade-up anim-delay-2">
+                        <li><span class="bullet"></span>Obsah UF₄ má dominantný vplyv na k-eff</li>
+                        <li><span class="bullet"></span>Hrúbka Be₂C spolupôsobí s koncentráciou UF₄</li>
+                        <li><span class="bullet"></span>Teplota a ThF₄ majú menší, ale merateľný efekt</li>
+                    </ul>
+                </div>
+                <div class="graph-img-wrap anim-fade-up anim-delay-1">
+                    <img src="img/lhs_pairwise_scatter.png"
+                         alt="Parove bodove grafy LHS vzoriek"
+                         class="graph-img">
+                    <span class="slide__image-caption">Párové bodové grafy — 200 LHS vzoriek, 5 parametrov (Zdroj: vlastná produkcia)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 27: Interpolation map animation -->
+        <section class="slide slide--imap" data-slide="27">
+            <div class="slide__content slide__content--imap">
+
+                <!-- left: text + readout panel -->
+                <div class="imap-text anim-fade-right">
+                    <h2 class="slide__heading">Interpolačná matica</h2>
+                    <div class="slide__divider"></div>
+                    <p class="slide__body--text anim-fade-up anim-delay-1">
+                        Z 200 LHS simulácií sme zostrojili <strong>interpolačnú maticu</strong>,
+                        ktorá modeluje správanie reaktora v celom parametrickom priestore.
+                        Pre ľubovoľnú kombináciu vstupných parametrov dokáže predpovedať
+                        k-efektívne <em>bez spustenia ďalšej simulácie</em>.
+                    </p>
+
+                    <!-- live readout -->
+                    <div class="imap-readout anim-fade-up anim-delay-2">
+                        <div class="imap-readout-row">
+                            <span class="imap-readout-lbl">Be₂C</span>
+                            <span class="imap-readout-val" id="imap-bec">— cm</span>
+                        </div>
+                        <div class="imap-readout-row imap-readout-row--keff">
+                            <span class="imap-readout-lbl">k-eff</span>
+                            <span class="imap-readout-val imap-readout-val--big" id="imap-keff">—</span>
+                        </div>
+                        <div class="imap-readout-row">
+                            <span class="imap-readout-lbl">UF₄</span>
+                            <span class="imap-readout-val" id="imap-uf4">— %</span>
+                        </div>
+                        <div class="imap-readout-row">
+                            <span class="imap-readout-lbl">T</span>
+                            <span class="imap-readout-val" id="imap-temp">— K</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- right: canvas -->
+                <canvas id="interp-map-canvas" class="imap-canvas"></canvas>
+
+            </div>
+        </section>
+
+        <!-- ===== SECTION 6: Čo ďalej? ===== -->
+
+        <!-- SLIDE 28: Section title -->
+        <section class="slide slide--section" data-slide="28">
+            <div class="slide__content">
+                <p class="slide__label anim-fade-down">Sekcia 06</p>
+                <h2 class="slide__heading anim-fade-up">Čo ďalej?</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+            </div>
+        </section>
+
+        <!-- SLIDE 29: Co dalej - FJFI -->
+        <section class="slide slide--fjfi" data-slide="29">
+            <div class="slide__content slide__content--fjfi">
+                <div class="fjfi-text anim-fade-right">
+                    <h2 class="slide__heading anim-fade-down">Čo ďalej?</h2>
+                    <div class="slide__divider"></div>
+                    <p class="fjfi-body anim-fade-up anim-delay-1">
+                        Na získanie presnejších výsledkov by som potreboval silnejšiu výpočetnú kapacitu.
+                    </p>
+                    <p class="fjfi-body anim-fade-up anim-delay-2">
+                        Vďaka záujmu dvoch profesorov na <strong>Fakulte Jadrové a Fyzikálne Inžinierské
+                        v Prahe</strong> v blízkom čase dostanem možnosť použiť ich výpočtový kluster
+                        na vypočítanie viacerých parametrov — rozpadových reťazí, transmutácií
+                        a dlhodobého deplécie paliva.
+                    </p>
+                </div>
+                <div class="fjfi-logo-wrap anim-fade-up anim-delay-2">
+                    <img src="img/FJFI.png" alt="FJFI ČVUT Praha" class="fjfi-logo">
+                    <p class="fjfi-logo-caption">Fakulta jaderná a fyzikálně inženýrská, ČVUT Praha</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== END ===== -->
+
+        <!-- SLIDE 30: Thank you -->
+        <section class="slide slide--end" data-slide="30">
+            <div class="slide__content">
+                <h2 class="slide__heading anim-fade-up">Ďakujem za pozornosť</h2>
+                <div class="slide__divider anim-scale-x anim-delay-1"></div>
+                <p class="slide__meta anim-fade-up anim-delay-2">Erik M. &middot; SOČ 2026</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="js/presentation.js"></script>
+    <script src="js/neutrons.js"></script>
+    <script src="js/moderation.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/simparams.js"></script>
+    <script src="js/lhs.js"></script>
+    <script src="js/interp-map.js"></script>
+</body>
+</html>
+
